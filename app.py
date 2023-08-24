@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 IMG_PATH = os.path.join(os.getcwd(), 'images/')
-CLASS_NAMES = ['Chinee Apple',
+CLASS_NAMES = ['Chinese Apple',
                'Lantana',
                'Parkinsonia',
                'Parthenium',
@@ -14,7 +14,7 @@ CLASS_NAMES = ['Chinee Apple',
                'Rubber Vine',
                'Siam Weed',
                'Snake Weed',
-               'Negatives']
+               'Negative']
 CLASSES = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 test = pd.read_csv('test_subset0.csv')
 model = joblib.load('xgb.pkl')
@@ -35,11 +35,10 @@ if sel:
     row = test.sample()
     label = row['Label'].values[0]
     classe = CLASS_NAMES[CLASSES.index(label)]
-    img_view = cv2.imread(row['Filename'].values[0])
-    st.image(img_view, caption=label, clamp=True)
+    img_view = cv2.imread('images/' + row['Filename'].values[0])
+    st.image(img_view, caption=classe, clamp=True)
 
     img = flatten(row['Filename'].values[0])
-    print(img.shape)
 
     pred = model.predict(img)[0]
     pred_label = CLASS_NAMES[CLASSES.index(pred)]
